@@ -3,45 +3,48 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ralanes <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 19:33:34 by ralanes           #+#    #+#              #
-#    Updated: 2024/02/20 19:33:37 by ralanes          ###   ########.fr        #
+#    Updated: 2024/03/05 17:37:44 by alexlowen        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-COLOR_RESET = \033[0m
-COLOR_GREEN = \033[32m
-COLOR_YELLOW = \033[33m
-COLOR_AZUL = \033[34m
+NAME = get_next_line.a
 
-SRC = get_next_line.c
-	get_next_line_utils.c
-
-OBJS = $(SRC: .c=.o)
-
+# Compilation
 CC = gcc
-CCFLAGS = -Wall -Wextra -Werror
-RM_RF = rm -rf
-NAME = get_next_line
+CFLAGS = -Wall -Werror -Wextra
 
-all : $(NAME)
+# Sources
+SRC = get_next_line.c \
+		get_next_line_utils.c \
 
-$(NAME) : $(OBJS)
-		@echo "$(COLOR_GREEN)Compilacion en 3, 2, 1 ...$(COLOR_RESET)"
-		@ar rcs $(NAME) $(OBJS)
-%.o : %.c 
-		$(CC) $(CCFLAGS) -c -o $@ $<
+OBJS =	$(SRC:.c=.o)
 
-clean :
-	@echo "$(COLOR_AZUL)Borrando todas las cositas...$(COLOR_RESET)"
-	@$(RM_RF) $(NAME) $(OBJS)
+# Linking
+INCLUDE = get_next_line.h
 
- 	@$(RM_RF) $(OBJS)
+$(NAME):$(OBJS)	$(INCLUDE)
+	ar -rsc	$(NAME)	$(OBJS)
 
- fclean :
- 	@$(RM_RF) $(NAME) $(OBJS)
+# Default target for compilation
+all: $(NAME)
 
+# Generate .o from respective .c
+%.o : %.c
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+# Clean objects
+clean:
+	rm -f $(OBJS)
+
+# Clean objects and executable
+fclean: clean
+	rm -f $(NAME)
+
+# Clean objects and executable and then compilation but just OBJS
 re: fclean all
 
-.PHONY : all clean fclean re
+# Key words
+.PHONY: all clean fclean re
