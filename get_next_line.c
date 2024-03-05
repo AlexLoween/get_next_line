@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:44 by ralanes           #+#    #+#             */
-/*   Updated: 2024/03/05 17:35:58 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/03/05 18:39:48 by ralanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ char	*get_next_line(int fd)
 	return (next_line);
 }
 
-
-int	main(void)
+ /*int	main(void)
 {
 	int		fd;
 	char	*next_line;
@@ -107,8 +106,10 @@ int	main(void)
 			break ;
 		}
 		printf("%s", next_line);
+		ft_leaks();
 		free (next_line);
+		
 	}
 	close (fd);
 	return (0);
-}
+}*/

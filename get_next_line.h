@@ -23,14 +23,12 @@
 # include <fcntl.h>
 # include <limits.h>
 
-// UTILS FUNCTIONS
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 
-// GNL FUNCTIONS
 char	*ft_stash(char *stash_read, size_t stash_len, size_t break_pos);
 char	*ft_next_line(char *line_read, size_t break_pos);
 char	*ft_read_line(int fd, char *stash);
