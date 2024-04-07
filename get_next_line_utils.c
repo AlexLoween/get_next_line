@@ -6,7 +6,7 @@
 /*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:34:06 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/07 22:06:00 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/07 22:34:40 by alexlowen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,23 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-size_t	ft_strlen(const char *s)
-{
-	int	i;
 
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-void ft_free(char **str)
+void	ft_free_strs(char **str, char **str1, char **str2)
 {
-	if(str && *str)
+	if (str && *str)
 	{
 		free(*str);
-		*str = (NULL);
+		*str = NULL;
+	}
+	if (str1 && *str1)
+	{
+		free(*str1);
+		*str1 = NULL;
+	}
+	if (str2 && *str2)
+	{
+		free(*str2);
+		*str2 = NULL;
 	}
 }
 char	*ft_strdup(const char *s1)
@@ -94,31 +96,28 @@ void	*ft_calloc(size_t count, size_t size)
 }
 
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*str;
-	int		i;
-	int		j;
+	char	*s;
+	int		len_s1;
+	int		len_s2;
 
-	if (!s1)
-		s1 = ft_calloc(1, sizeof(char));
-	if (!s1 || !s2)
-		return (0);
-	str = (char *)ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
-	if (!str)
-		return (0);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	free((void *)s1);
-	return (str);
+	len_s1 = 0;
+	if (!s1 && !s2)
+		return (NULL);
+	while (s1 && s1[len_s1])
+		len_s1++;
+	len_s2 = 0;
+	while (s2 && s2[len_s2])
+		len_s2++;
+	s = ft_calloc(len_s1 + len_s2 + 1, sizeof * s);
+	if (!s)
+		return (NULL);
+	len_s1 = -1;
+	while (s1 && s1[++len_s1])
+		s[len_s1] = s1[len_s1];
+	len_s2 = -1;
+	while (s2 && s2[++len_s2])
+		s[len_s1 + len_s2] = s2[len_s2];
+	return (s);
 }

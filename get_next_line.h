@@ -6,7 +6,7 @@
 /*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:56 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/07 22:03:20 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/07 22:11:36 by alexlowen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_stash(char *stash_read, size_t stash_len, size_t break_pos);
 char	*ft_next_line(char *line_read, size_t break_pos);
 char	*ft_read_line(int fd, char *stash);
-void    ft_free(char **str);
+void	ft_free_strs(char **str, char **str1, char **str2);
 char	*get_next_line(int fd);
 
 #endif
