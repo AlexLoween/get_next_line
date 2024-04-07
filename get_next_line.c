@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:44 by ralanes           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/07 22:06:38 by alexlowen        ###   ########.fr       */
+=======
+/*   Updated: 2024/03/05 18:39:48 by ralanes          ###   ########.fr       */
+>>>>>>> f49e14734102213db0b823a9ce975aae55b309dd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +131,11 @@ char *get_next_line(int fd)
 	return(line);
 }
 
+<<<<<<< HEAD
 int	main(void)
+=======
+ /*int	main(void)
+>>>>>>> f49e14734102213db0b823a9ce975aae55b309dd
 {
 	int		fd;
 	char	*line;
@@ -139,9 +147,25 @@ int	main(void)
 	line = "";
 	while (line != NULL)
 	{
+<<<<<<< HEAD
 		line = get_next_line(fd);
 		printf("%s", line);
+=======
+		next_line = get_next_line(fd);
+		if (!next_line)
+		{
+			break ;
+		}
+		printf("%s", next_line);
+		ft_leaks();
+		free (next_line);
+		
+>>>>>>> f49e14734102213db0b823a9ce975aae55b309dd
 	}
 	fd = close(fd);
 	return (0);
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> f49e14734102213db0b823a9ce975aae55b309dd
