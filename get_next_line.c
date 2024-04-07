@@ -6,7 +6,7 @@
 /*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:44 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/07 22:31:19 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/07 23:11:11 by alexlowen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ char *get_before_jump(const char *str)
 	int i;
 	
 	i = 0;
-	while(str[i] != '\0' && str[i] != '\n')
+	while(!ft_strchr(str,'\n') && (!ft_strchr(str,'\0')))
 		i++;
-	if(str[i] != '\0' && str[i] == '\n')
+	if(!ft_strchr(str,'\0')&& (ft_strchr(str,'\n')))
 		i++;
 	res_memory = ft_calloc(i + 1, sizeof * res_memory);
 	if(!res_memory)
 		return(NULL);
 	i = 0;
-	while(str[i] != '\0' && str[i] != '\n')
+	while(str[i] && ft_strchr(&str[i],'\n'))
 	{
 		res_memory[i] = str[i];
 		i++;
 	}
-	if (str[i] == '\n')
+	if (ft_strchr(str, '\n'))
 	{
 		res_memory[i] = str[i];
 		i++;	
@@ -71,7 +71,7 @@ void read_line(int fd, char **almacen, char **temporal)
 {
 	char *reserva;
 	long leido;
-	
+
 	reserva = malloc(sizeof(char)*(BUFFER_SIZE + 1));
 	if(!reserva)
 		return ;
@@ -83,7 +83,7 @@ void read_line(int fd, char **almacen, char **temporal)
 		{
 			ft_free_strs(&reserva, almacen,temporal);
 			return ;
-		} 
+		}
 		reserva[leido] = '\0';
 		*temporal= ft_strdup(*almacen);
 		ft_free_strs(almacen, 0, 0);
