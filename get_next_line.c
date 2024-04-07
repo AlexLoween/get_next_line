@@ -6,109 +6,142 @@
 /*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:44 by ralanes           #+#    #+#             */
-/*   Updated: 2024/03/05 17:35:58 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/07 22:06:38 by alexlowen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_stash(char *stash, size_t stash_len, size_t break_pos)
+char *get_after_jump(const char *str)
 {
-	size_t	new_stash_size;
-	char	*new_stash;
+	char *res_memory;
+	int	i;
+	int j;
 
-	new_stash_size = stash_len - break_pos;
-	if (!new_stash_size || !stash[break_pos])
-		return (ft_free(stash));
-	new_stash = ft_substr(stash, break_pos, new_stash_size);
-	ft_free(stash);
-	if (!new_stash)
+	i =  0;
+	while(str[i] != '\0' && str[i] != '\n')
+		i++;
+	if (str[i] != '\0' && str[i] == '\n')
+		i++;
+	j = 0;
+	while(str && str[j])
+		j++;
+	res_memory = ft_calloc((j-i) + 1, sizeof *res_memory);
+	if(!res_memory)
 		return (NULL);
-	return (new_stash);
-}
-
-char	*ft_next_line(char *stash, size_t break_pos)
-{
-	char	*next_line;
-
-	next_line = ft_substr(stash, 0, break_pos);
-	if (!next_line)
-		return (NULL);
-	return (next_line);
-}
-
-char	*ft_read_line(int fd, char *stash)
-{
-	char	*buf;
-	int		bytes_read;
-
-	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buf)
-		return (NULL);
-	bytes_read = 1;
-	while (!ft_strchr(stash, '\n') && bytes_read > 0)
+	j = 0;
+	while (str[i + j])
 	{
-		bytes_read = read(fd, buf, BUFFER_SIZE);
-		if (bytes_read > 0 || (bytes_read == 0 && *buf))
-		{
-			buf[bytes_read] = '\0';
-			stash = ft_strjoin(stash, buf);
-		}
+		res_memory[j] = str[j + i];
+		j++;
 	}
-	free (buf);
-	if (bytes_read < 0)
-		return (ft_free(stash));
-	return (stash);
+	return (res_memory);
 }
 
-char	*ft_free(char *stash)
+char *get_before_jump(const char *str)
 {
-	free (stash);
-	stash = NULL;
-	return (stash);
+	char  *res_memory;
+	int i;
+	
+	i = 0;
+	while(str[i] != '\0' && str[i] != '\n')
+		i++;
+	if(str[i] != '\0' && str[i] == '\n')
+		i++;
+	res_memory = ft_calloc(i + 1, sizeof * res_memory);
+	if(!res_memory)
+		return(NULL);
+	i = 0;
+	while(str[i] != '\0' && str[i] != '\n')
+	{
+		res_memory[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+	{
+		res_memory[i] =str[i];
+		i++;	
+	}
+	return(res_memory);
 }
 
-char	*get_next_line(int fd)
+char *before_and_after(char **almacen, char **temporal)
 {
-	char		*next_line;
-	static char	*stash;
-	size_t		stash_len;
-	size_t		break_pos;
+char *line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
-	stash = ft_read_line(fd, stash);
-	if (!stash)
+*temporal = ft_strdup(*almacen);
+ft_free(almacen);
+*almacen = get_after_jump(*temporal);
+line = get_before_jump(*temporal);
+ft_free(temporal);
+return(line);
+}
+void read_line(int fd, char **almacen, char **temporal)
+{
+	char *reserva;
+	long leido;
+	reserva = malloc(sizeof(char)*(BUFFER_SIZE + 1));
+	if(!reserva)
+		;
+	leido = 1;
+	while(leido > 0)
+	{
+		leido = read(fd, reserva, BUFFER_SIZE);
+		if(leido < 0)
+			{
+			ft_free(&reserva);
+			ft_free(almacen);
+			ft_free(temporal);
+			return;
+			} 
+		reserva[leido] = '\0';
+		*temporal= strdup(*almacen);
+		ft_free(almacen);
+		*almacen= ft_strjoin(*temporal, reserva);
+		ft_free(temporal);
+		if(ft_strchr(*almacen,'\n'))
+			break ;
+	}
+	ft_free(&reserva);
+}
+char *get_next_line(int fd)
+{
+	static char *almacen;
+	char *temporal;
+	char *line;
+	
+	if(fd < 0 || BUFFER_SIZE < 0)
+		return(NULL);
+	line = NULL;
+	temporal = NULL;
+	read_line(fd, &almacen, &temporal);
+	if(almacen != NULL && *almacen != '\0')
+		line = before_and_after(&almacen, &temporal);
+	if(!line || *line == '\0')
+	{
+		ft_free(&almacen);
+		ft_free(&temporal);
+		ft_free(&line);
 		return (NULL);
-	stash_len = ft_strlen(stash);
-	if (ft_strchr(stash, '\n'))
-		break_pos = ft_strchr(stash, '\n') - stash + 1;
-	else
-		break_pos = stash_len;
-	next_line = ft_next_line(stash, break_pos);
-	if (!next_line)
-		return (ft_free(stash));
-	stash = ft_stash(stash, stash_len, break_pos);
-	return (next_line);
+	}
+	return(line);
 }
-
 
 int	main(void)
 {
 	int		fd;
-	char	*next_line;
+	char	*line;
 
+	fd = 0;
+	if (fd == -1)
+		return (-1);
 	fd = open("text.txt", O_RDONLY);
-	while (1)
+	line = "";
+	while (line != NULL)
 	{
-		next_line = get_next_line(fd);
-		if (!next_line)
-		{
-			break ;
-		}
-		printf("%s", next_line);
-		free (next_line);
+		line = get_next_line(fd);
+		printf("%s", line);
 	}
-	close (fd);
+	fd = close(fd);
 	return (0);
 }

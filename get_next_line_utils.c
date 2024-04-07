@@ -6,7 +6,7 @@
 /*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:34:06 by ralanes           #+#    #+#             */
-/*   Updated: 2024/03/05 16:50:07 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/07 22:06:00 by alexlowen        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,39 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	if (!s)
-		return (i);
-	while (s[i])
-	{
+	while (s[i] != '\0')
 		i++;
-	}
 	return (i);
 }
+void ft_free(char **str)
+{
+	if(str && *str)
+	{
+		free(*str);
+		*str = (NULL);
+	}
+}
+char	*ft_strdup(const char *s1)
+{
+	char	*s2;
+	int		size;
 
+	if (!s1)
+		return (ft_strdup(""));
+	size = 0;
+	while (s1[size])
+		size++;
+	s2 = ft_calloc(size + 1, sizeof * s2);
+	if (!s2)
+		return (NULL);
+	size = 0;
+	while (s1[size])
+	{
+		s2[size] = s1[size];
+		size++;
+	}
+	return (s2);
+}
 char	*ft_strchr(const char *s, int c)
 {
 	char	chr;
@@ -69,34 +93,6 @@ void	*ft_calloc(size_t count, size_t size)
 	return ((void *)str);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (len == 0 || start >= ft_strlen(s))
-		str = (char *)ft_calloc(1, sizeof(char));
-	else if (len >= (ft_strlen(s) - start))
-	{
-		str = (char *)ft_calloc(ft_strlen(s) - start + 1, sizeof(char));
-		if (!str)
-			return (0);
-		while (s[start] != '\0')
-			str[i++] = s[start++];
-	}
-	else
-	{
-		str = (char *)ft_calloc(len + 1, sizeof(char));
-		if (!str)
-			return (0);
-		while (len--)
-			str[i++] = s[start++];
-	}
-	return (str);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
