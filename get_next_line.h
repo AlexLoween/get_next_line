@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:56 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/07 22:11:36 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/09 21:14:28 by ralanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE -1
 # endif
 # include <unistd.h>
 # include <stdio.h>
@@ -23,7 +23,6 @@
 # include <fcntl.h>
 # include <limits.h>
 
-size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);

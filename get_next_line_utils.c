@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexlowen <alexlowen@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:34:06 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/07 22:34:40 by alexlowen        ###   ########.fr       */
+/*   Updated: 2024/04/08 20:12:12 by ralanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
-
 
 void	ft_free_strs(char **str, char **str1, char **str2)
 {
@@ -36,6 +35,7 @@ void	ft_free_strs(char **str, char **str1, char **str2)
 		*str2 = NULL;
 	}
 }
+
 char	*ft_strdup(const char *s1)
 {
 	char	*s2;
@@ -57,6 +57,7 @@ char	*ft_strdup(const char *s1)
 	}
 	return (s2);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	char	chr;
@@ -94,7 +95,6 @@ void	*ft_calloc(size_t count, size_t size)
 		str[i++] = '\0';
 	return ((void *)str);
 }
-
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
