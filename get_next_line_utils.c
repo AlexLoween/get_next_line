@@ -6,16 +6,11 @@
 /*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:34:06 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/08 20:12:12 by ralanes          ###   ########.fr       */
+/*   Updated: 2024/04/28 00:38:15 by ralanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
 
 void	ft_free_strs(char **str, char **str1, char **str2)
 {
@@ -98,7 +93,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*s;
+	char	*new_str;
 	int		len_s1;
 	int		len_s2;
 
@@ -110,14 +105,14 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	len_s2 = 0;
 	while (s2 && s2[len_s2])
 		len_s2++;
-	s = ft_calloc(len_s1 + len_s2 + 1, sizeof * s);
-	if (!s)
+	new_str = ft_calloc(len_s1 + len_s2 + 1, sizeof * new_str);
+	if (!new_str)
 		return (NULL);
 	len_s1 = -1;
 	while (s1 && s1[++len_s1])
-		s[len_s1] = s1[len_s1];
+		new_str[len_s1] = s1[len_s1];
 	len_s2 = -1;
 	while (s2 && s2[++len_s2])
-		s[len_s1 + len_s2] = s2[len_s2];
-	return (s);
+		new_str[len_s1 + len_s2] = s2[len_s2];
+	return (new_str);
 }

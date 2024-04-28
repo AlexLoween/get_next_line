@@ -6,13 +6,13 @@
 /*   By: ralanes <ralanes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 19:33:44 by ralanes           #+#    #+#             */
-/*   Updated: 2024/04/22 20:09:12 by ralanes          ###   ########.fr       */
+/*   Updated: 2024/04/28 00:38:13 by ralanes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_before_jump(const char *str)
+static char	*get_before_jump(const char *str)
 {
 	char	*res_memory;
 	int		i;
@@ -39,7 +39,7 @@ char	*get_before_jump(const char *str)
 	return (res_memory);
 }
 
-char	*get_after_jump(const char *str)
+static char	*get_after_jump(const char *str)
 {
 	char	*res_memory;
 	int		i;
@@ -65,7 +65,7 @@ char	*get_after_jump(const char *str)
 	return (res_memory);
 }
 
-void	read_line(int fd, char **save, char **temporary)
+static void	read_line(int fd, char **save, char **temporary)
 {
 	char	*reserva;
 	long	leido;
@@ -93,7 +93,7 @@ void	read_line(int fd, char **save, char **temporary)
 	ft_free_strs(&reserva, 0, 0);
 }
 
-char	*before_and_after(char **save, char **temporary)
+static char	*before_and_after(char **save, char **temporary)
 {
 	char	*line;
 
@@ -133,11 +133,10 @@ char	*get_next_line(int fd)
 
 	fd = 0;
 	fd = open("text.txt", O_RDONLY);
-	while (1)
+	line = "";
+	while (line != NULL)
 	{
 		line = get_next_line(fd);
-		if(line == NULL)
-			break;
 		printf("%s", line);
 	}
 	fd = close(fd);
